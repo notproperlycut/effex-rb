@@ -1,11 +1,7 @@
 require "test_helper"
 
 class EffexTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Effex::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert false
+  def test_it_implements_the_requested_api
+    Effex::ExchangeRate.at(Date.today,'GBP','USD')
   end
 end

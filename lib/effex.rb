@@ -1,5 +1,5 @@
 require "effex/version"
 
 module Effex
-  # Your code goes here...
+  require 'effex/exchange_rate'
 end
