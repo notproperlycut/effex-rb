@@ -1,7 +1,7 @@
 require 'date'
 
 module Effex
-  class ExchangeRate
+  module ExchangeRate
     def self.at(date, base_currency, counter_currency)
     end
   end
