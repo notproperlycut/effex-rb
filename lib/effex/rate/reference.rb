@@ -9,12 +9,17 @@ module Effex
     class Reference < Base
       include ActiveModel::Validations
 
-      attr_accessor :date, :base_currency, :counter_currency, :rate
+      attr_accessor :source, :date, :base_currency, :counter_currency, :rate
 
-      validates_date :date, presence: true
+      # presumably some better constraint on source string format. But for now...
+      validates :source, presence: true, length: { minimum: 3 }
+
       validates :base_currency, presence: true, format: { with: /[A-Z][A-Z][A-Z]/, message: "Incorrect currency format" }
       validates :counter_currency, presence: true, format: { with: /[A-Z][A-Z][A-Z]/, message: "Incorrect currency format" }
       validates :rate, presence: true, numericality: { greater_than: 0.0 }
+
+      validates_date :date, presence: true
+
       validate :currencies_cannot_be_equal
 
       def initialize(attribs)

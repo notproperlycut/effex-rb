@@ -8,6 +8,7 @@ class RateCrossTest < Minitest::Test
     Timecop.freeze
 
     @rate1 = {
+      source: "source1",
       date: Date.today,
       base_currency: "USD",
       counter_currency: "GBP",
@@ -15,6 +16,7 @@ class RateCrossTest < Minitest::Test
     }
 
     @rate2 = {
+      source: "source1",
       date: Date.today,
       base_currency: "USD",
       counter_currency: "JPY",
@@ -38,6 +40,13 @@ class RateCrossTest < Minitest::Test
     assert cross_rate.base_currency == @rate1[:counter_currency]
     assert cross_rate.counter_currency == @rate2[:counter_currency]
     assert cross_rate.rate == @rate2[:rate] / @rate1[:rate]
+  end
+
+  def test_will_not_cross_with_different_source
+      refute Effex::Rate::Cross.new(
+        Effex::Rate::Reference.new(@rate1),
+        Effex::Rate::Reference.new(@rate2.merge({source: "source2"}))
+      ).valid?
   end
 
   def test_will_not_cross_with_different_date

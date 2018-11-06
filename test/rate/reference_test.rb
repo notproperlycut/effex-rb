@@ -9,6 +9,7 @@ class RateReferenceTest < Minitest::Test
     Timecop.freeze
 
     @valid_rate = {
+      source: "source1",
       date: Date.today,
       base_currency: "USD",
       counter_currency: "GBP",
@@ -22,6 +23,10 @@ class RateReferenceTest < Minitest::Test
 
   def test_creates
     assert Effex::Rate::Reference.new(@valid_rate).valid?
+  end
+
+  def test_validates_source_format
+    refute Effex::Rate::Reference.new(@valid_rate.merge(source: 1)).valid?
   end
 
   def test_validates_date
