@@ -28,9 +28,6 @@ module Effex
       def currencies_cannot_be_equal
         errors.add(:counter_currency, "Cannot be the same as base currency") if @counter_currency == @base_currency
       end
-
-      def self.cross_rate(rate1, rate2)
-      end
     end
   end
 end

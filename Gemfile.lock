@@ -21,6 +21,7 @@ GEM
     minitest (5.11.3)
     rake (10.5.0)
     thread_safe (0.3.6)
+    timecop (0.9.1)
     timeliness (0.3.8)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -36,6 +37,7 @@ DEPENDENCIES
   effex!
   minitest (~> 5.0)
   rake (~> 10.0)
+  timecop (~> 0.9)
 
 BUNDLED WITH
    1.16.1

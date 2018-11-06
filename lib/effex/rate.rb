@@ -1,7 +1,7 @@
 module Effex
   module Rate
-    require 'exchange_rate/base'
-    require 'exchange_rate/reference'
-    require 'exchange_rate/cross'
+    require 'effex/rate/base'
+    require 'effex/rate/reference'
+    require 'effex/rate/cross'
   end
 end
