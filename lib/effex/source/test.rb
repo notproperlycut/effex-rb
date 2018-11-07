@@ -10,8 +10,12 @@ module Effex
         @rates << rate
       end
 
+      def source_name
+        @source_name
+      end
+
       def retrieve
-        @rates.map { |r| r.merge({source: @source_name}) }
+        decorate(@rates)
       end
     end
   end
