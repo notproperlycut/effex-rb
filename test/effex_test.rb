@@ -10,25 +10,25 @@ class EffexTest < Minitest::Test
         date: Date.today,
         base_currency: "GBP",
         counter_currency: "USD",
-        rate: 1.2345
+        rate: "1.2345"
       },
       {
         date: Date.today,
         base_currency: "GBP",
         counter_currency: "JPY",
-        rate: 2.0
+        rate: "2.0"
       },
       {
         date: Date.today,
         base_currency: "GBP",
         counter_currency: "CZK",
-        rate: 2.0
+        rate: "2.0"
       },
       {
         date: Date.tomorrow,
         base_currency: "GBP",
         counter_currency: "USD",
-        rate: 2.3456
+        rate: "2.3456"
       }
     ]
 
@@ -37,7 +37,7 @@ class EffexTest < Minitest::Test
         date: Date.tomorrow,
         base_currency: "GBP",
         counter_currency: "JPY",
-        rate: 2.0
+        rate: "2.0"
       }
     ]
 
@@ -83,7 +83,7 @@ class EffexTest < Minitest::Test
     assert rates[0].date == @source1_rates[0][:date]
     assert rates[0].base_currency == "USD"
     assert rates[0].counter_currency == "JPY"
-    assert rates[0].rate == 2.0 / 1.2345
+    assert rates[0].rate == "%.3f" % (2.0 / 1.2345)
   end
 
   def test_does_not_find_missing_cross_rate
@@ -99,13 +99,13 @@ class EffexTest < Minitest::Test
         date: Date.today,
         base_currency: "GBP",
         counter_currency: "USD",
-        rate: 2.345
+        rate: "2.345"
       },
       {
         date: Date.today,
         base_currency: "GBP",
         counter_currency: "JPY",
-        rate: 4.0
+        rate: "4.0"
       }
     ]
 

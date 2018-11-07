@@ -13,7 +13,7 @@ class RateReferenceTest < Minitest::Test
       date: Date.today,
       base_currency: "USD",
       counter_currency: "GBP",
-      rate: 1.000
+      rate: "1.234"
     }
   end
 
@@ -59,10 +59,15 @@ class RateReferenceTest < Minitest::Test
   end
 
   def test_validates_rate
-    assert Effex::Rate::Reference.new(@valid_rate.merge({rate: 0.001})).valid?
-    assert Effex::Rate::Reference.new(@valid_rate.merge({rate: 123456.78})).valid?
-    refute Effex::Rate::Reference.new(@valid_rate.merge({rate: -123456.78})).valid?
+    assert Effex::Rate::Reference.new(@valid_rate.merge({rate: "0.001"})).valid?
+    assert Effex::Rate::Reference.new(@valid_rate.merge({rate: "123456.78"})).valid?
+    refute Effex::Rate::Reference.new(@valid_rate.merge({rate: "-123456.78"})).valid?
     refute Effex::Rate::Reference.new(@valid_rate.merge({rate: "boo"})).valid?
+    refute Effex::Rate::Reference.new(@valid_rate.merge({rate: {}})).valid?
+  end
+
+  def test_provides_numerical_rate
+    assert Effex::Rate::Reference.new(@valid_rate).rate_f == 1.234
   end
 end
 

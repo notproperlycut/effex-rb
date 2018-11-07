@@ -9,6 +9,7 @@ module Effex
       include ActiveModel::Validations
 
       attr_accessor :source, :date, :base_currency, :counter_currency, :rate
+      attr_reader :rate_f
 
       # presumably some better constraint on source string format. But for now...
       validates :source, presence: true, length: { minimum: 3 }
@@ -31,6 +32,10 @@ module Effex
 
       def currencies_cannot_be_equal
         errors.add(:counter_currency, "Cannot be the same as base currency") if @counter_currency == @base_currency
+      end
+
+      def rate_f
+        @rate.to_f
       end
 
       def to_s

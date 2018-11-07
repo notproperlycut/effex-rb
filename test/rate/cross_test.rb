@@ -12,7 +12,7 @@ class RateCrossTest < Minitest::Test
       date: Date.today,
       base_currency: "USD",
       counter_currency: "GBP",
-      rate: 1.123
+      rate: "1.123"
     }
 
     @rate2 = {
@@ -20,8 +20,10 @@ class RateCrossTest < Minitest::Test
       date: Date.today,
       base_currency: "USD",
       counter_currency: "JPY",
-      rate: 2.234
+      rate: "2.234"
     }
+
+    @crossed_rate_str = "%.3f" % (2.234 / 1.123)
   end
 
   def teardown
@@ -39,7 +41,7 @@ class RateCrossTest < Minitest::Test
     assert cross_rate.date == @rate1[:date]
     assert cross_rate.base_currency == @rate1[:counter_currency]
     assert cross_rate.counter_currency == @rate2[:counter_currency]
-    assert cross_rate.rate == @rate2[:rate] / @rate1[:rate]
+    assert cross_rate.rate == @crossed_rate_str
   end
 
   def test_will_not_cross_with_different_source

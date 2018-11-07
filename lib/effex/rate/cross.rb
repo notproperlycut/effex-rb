@@ -11,12 +11,13 @@ module Effex
         @rate1 = rate1
         @rate2 = rate2
 
+        # TODO: rough and ready control over precision of rate here
         attribs = {
           source: @rate1.source,
           date: @rate1.date,
           base_currency: @rate1.counter_currency,
           counter_currency: @rate2.counter_currency,
-          rate: @rate2.rate / @rate1.rate
+          rate: "%.3f" % (@rate2.rate_f / @rate1.rate_f)
         }
 
         super(attribs)
