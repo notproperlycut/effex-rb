@@ -12,7 +12,7 @@ module Effex
       end
 
       def decorate(rates)
-        rates.map { |r| r.merge({source: source_name}) }
+        rates.map { |r| {source: source_name}.merge(r) }
       end
     end
   end

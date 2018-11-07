@@ -9,14 +9,15 @@ module Effex
       end
 
       def retrieve
-        doc = Nokogiri::Slop(open(ecb_url))
-        rates = doc.html.body.envelope.cube.cube.flat_map do |date_collection|
-          date_collection.cube.map do |rate|
+        doc = Nokogiri::XML(open(ecb_url)).remove_namespaces!
+
+        rates = doc.xpath("/Envelope/Cube/Cube").flat_map do |date_collection|
+          date_collection.xpath("Cube").map do |rate|
             {
-              date: date_collection["time"],
-              counter_currency: rate["currency"],
+              date: date_collection.attribute("time").value,
               base_currency: "EUR",
-              rate: rate["rate"]
+              counter_currency: rate.attribute("currency").value,
+              rate: rate.attribute("rate").value
             }
           end
         end
