@@ -1,4 +1,6 @@
 require 'date'
+require 'effex/rate'
+require 'effex/repository'
 
 module Effex
   module ExchangeRate

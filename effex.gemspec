@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activemodel", "~> 5.2"
   spec.add_dependency "validates_timeliness", "~> 4.0"
+  spec.add_dependency "nokogiri", "~> 1.8"
 end

@@ -6,7 +6,7 @@ module Effex
       end
 
       def save(rate)
-        @rates[rate.date] ||= []
+        @rates[rate.date] ||= Set.new()
         @rates[rate.date] << rate
         return rate
       end
@@ -14,13 +14,13 @@ module Effex
       def find(date, base, counter)
         (@rates[date] || []).select do |r|
           (r.base_currency == base) && (r.counter_currency == counter)
-        end
+        end.to_a
       end
 
       def find_by_counter(date, counter)
         (@rates[date] || []).select do |r|
           r.counter_currency == counter
-        end
+        end.to_a
       end
 
       def to_s
