@@ -14,31 +14,35 @@ module Effex
 
     def self.all_at(date, base_currency, counter_currency)
       repo = Effex::Repository.for(:reference_rate)
+
       reference_rates = repo.find(date, base_currency, counter_currency)
       return reference_rates unless reference_rates.empty?
+
+      all_cross_rates_at(date, base_currency, counter_currency)
+    end
+
+  private
+    def self.all_cross_rates_at(date, base_currency, counter_currency)
+      repo = Effex::Repository.for(:reference_rate)
 
       rates1 = repo.find_by_counter(date, base_currency)
       rates2 = repo.find_by_counter(date, counter_currency)
 
-      rates1_pairs = rates1.map do |r1|
-        r1_rates2 = rates2.select do |r2|
-          (r2.base_currency == r1.base_currency) &&
-            (r2.source == r1.source)
+      pairs = rates1.map do |r1|
+        r2s = rates2.select do |r2|
+          (r2.base_currency == r1.base_currency) && (r2.source == r1.source)
         end
 
-        {
-          rate1: r1,
-          rates2: r1_rates2
-        }
+        {rate1: r1, rates2: r2s}
       end
 
-      # TODO: if any pair has rates2 > 1, that's probably an error (dupe entries in repo)
+      # TODO: if any pair has rates2 > 1, that's probably an error (duplicate entries in repo)
 
-      valid_rate_pairs = rates1_pairs.select do |rp|
+      unique_pairs = pairs.select do |rp|
         rp[:rates2].length == 1
       end
 
-      valid_rate_pairs.map do |rp|
+      unique_pairs.map do |rp|
         Effex::Rate::Cross.new(rp[:rate1], rp[:rates2][0])
       end
     end
