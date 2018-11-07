@@ -5,6 +5,9 @@ module Effex
         Effex::Rate::Reference.new()
       end
 
+      # TODO: need acceptance tests for repository implementations
+      # which should include a requirement to not duplicate already-saved
+      # entries via this method (or save_all below)
       def save
         raise NotImplementedError, 'Repository must implement save method'
       end

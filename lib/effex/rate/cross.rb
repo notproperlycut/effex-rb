@@ -37,15 +37,34 @@ module Effex
 
       def to_s
         <<~EOF
-        Rate 1: #{@rate1}
-        Rate 2: #{@rate2}
         Cross Rate
           srce: #{@source}
           date: #{@date}
           base: #{@base_currency}
           cntr: #{@counter_currency}
           rate: #{@rate}
+
+        [Rate 1]: #{@rate1}
+        [Rate 2]: #{@rate2}
         EOF
+      end
+
+      def ==(other)
+        @source == other.source &&
+        @date == other.date &&
+        @base_currency == other.base_currency &&
+        @counter_currency == other.counter_currency &&
+        @rate == other.rate &&
+        @rate1 == other.rate1 &&
+        @rate2 == other.rate2
+      end
+
+      def eql?(other)
+        self == other
+      end
+
+      def hash
+          [@source, @date, @base_currency, @counter_currency, @rate, @rate1.hash, @rate2.hash].hash
       end
     end
   end

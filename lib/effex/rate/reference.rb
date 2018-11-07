@@ -48,6 +48,22 @@ module Effex
           rate: #{@rate}
         EOF
       end
+
+      def ==(other)
+        @source == other.source &&
+        @date == other.date &&
+        @base_currency == other.base_currency &&
+        @counter_currency == other.counter_currency &&
+        @rate == other.rate
+      end
+
+      def eql?(other)
+        self == other
+      end
+
+      def hash
+          [@source, @date, @base_currency, @counter_currency, @rate].hash
+      end
     end
   end
 end
