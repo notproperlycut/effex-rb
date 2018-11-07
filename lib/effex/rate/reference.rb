@@ -1,4 +1,3 @@
-require 'effex/rate/base'
 require 'active_model'
 require 'validates_timeliness'
 
@@ -6,7 +5,7 @@ require 'validates_timeliness'
 
 module Effex
   module Rate
-    class Reference < Base
+    class Reference
       include ActiveModel::Validations
 
       attr_accessor :source, :date, :base_currency, :counter_currency, :rate
@@ -32,6 +31,17 @@ module Effex
 
       def currencies_cannot_be_equal
         errors.add(:counter_currency, "Cannot be the same as base currency") if @counter_currency == @base_currency
+      end
+
+      def to_s
+        <<~EOF
+        Reference Rate
+          srce: #{@source}
+          date: #{@date}
+          base: #{@base_currency}
+          cntr: #{@counter_currency}
+          rate: #{@rate}
+        EOF
       end
     end
   end

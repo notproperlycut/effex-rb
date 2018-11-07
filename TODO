@@ -27,3 +27,5 @@
   - implement the API
   - what's the correct calculation?
   - add tasks (CLI?) for query
+
+- check require/module structure

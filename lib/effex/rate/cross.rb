@@ -33,6 +33,19 @@ module Effex
       def base_currencies_are_equal
         errors.add(:rate2, "Rates must have the same base currency") unless @rate1.base_currency == @rate2.base_currency
       end
+
+      def to_s
+        <<~EOF
+        Rate 1: #{@rate1}
+        Rate 2: #{@rate2}
+        Cross Rate
+          srce: #{@source}
+          date: #{@date}
+          base: #{@base_currency}
+          cntr: #{@counter_currency}
+          rate: #{@rate}
+        EOF
+      end
     end
   end
 end

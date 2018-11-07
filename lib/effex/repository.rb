@@ -4,15 +4,15 @@ module Effex
     require 'effex/repository/memory'
     require 'effex/repository/active_record'
 
-    def register(model, repository)
+    def self.register(model, repository)
       repositories[model] = repository
     end
 
-    def for(model)      
+    def self.for(model)
       repositories[model]
     end
 
-    def repositories
+    def self.repositories
       @repositories ||= {}
     end
   end
