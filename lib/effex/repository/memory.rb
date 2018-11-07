@@ -17,6 +17,12 @@ module Effex
         end
       end
 
+      def find_by_counter(date, counter)
+        (@rates[date] || []).select do |r|
+          r.counter_currency == counter
+        end
+      end
+
       def to_s
         "Memory repo with #{@rates.length} dates"
       end
