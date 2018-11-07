@@ -1,12 +1,8 @@
-- ruby version
 - logging
 - docs
   - module-, class-, method-level
   - readme, usage
   - notes about implementation
-- feed
-  - can use different feed
-  - formats change between providers, support adapter
 - data ingestion
   - cron support
   - rake task for retrieving/storing new data
@@ -19,3 +15,6 @@
 
 - check require/module structure
 - unit test repositories for handling of dups
+- acceptance tests for repository implementations
+  - include requirement to not create duplicate entries
+- integration tests for ecb source classes
