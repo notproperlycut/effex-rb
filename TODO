@@ -1,29 +1,21 @@
 - ruby version
-- rspec
 - logging
-- exceptions
-  - currency not found
-  - date too early
-  - date too late
-  - future date
-  - date missing
 - docs
-  - module-level
+  - module-, class-, method-level
   - readme, usage
+  - notes about implementation
 - feed
   - can use different feed
-  - base currency can change, presumably
   - formats change between providers, support adapter
-- put version in the rigt place!
 - data ingestion
   - cron support
   - rake task for retrieving/storing new data
   - need Railtie?
 - storage abstraction
-  - probably assume SQL
   - need support for schema, migrations (rake)
   - can likely support other (eg k-v) storage, support adapter
 - query
-  - implement the API
-  - what's the correct calculation?
   - add tasks (CLI?) for query
+
+- check require/module structure
+- unit test repositories for handling of dups

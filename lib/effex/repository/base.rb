@@ -9,8 +9,16 @@ module Effex
         raise NotImplementedError, 'Repository must implement save method'
       end
 
-      def find_by_date
-        raise NotImplementedError, 'Repository must implement find_by_date method'
+      def save_all(rates)
+        rates.each { |r| save(r) }
+      end
+
+      def find
+        raise NotImplementedError, 'Repository must implement find method'
+      end
+
+      def find_by_counter
+        raise NotImplementedError, 'Repository must implement find_counter method'
       end
     end
   end
