@@ -32,8 +32,8 @@ class RateCrossTest < Minitest::Test
 
   def test_crosses_rates
     cross_rate = Effex::Rate::Cross.new(
-      Effex::Rate::Reference.new(@rate1),
-      Effex::Rate::Reference.new(@rate2)
+      Effex::Rate::Rate.new(@rate1),
+      Effex::Rate::Rate.new(@rate2)
     )
 
     assert cross_rate.is_a?(Effex::Rate::Cross)
@@ -46,29 +46,29 @@ class RateCrossTest < Minitest::Test
 
   def test_will_not_cross_with_different_source
       refute Effex::Rate::Cross.new(
-        Effex::Rate::Reference.new(@rate1),
-        Effex::Rate::Reference.new(@rate2.merge({source: "source2"}))
+        Effex::Rate::Rate.new(@rate1),
+        Effex::Rate::Rate.new(@rate2.merge({source: "source2"}))
       ).valid?
   end
 
   def test_will_not_cross_with_different_date
       refute Effex::Rate::Cross.new(
-        Effex::Rate::Reference.new(@rate1),
-        Effex::Rate::Reference.new(@rate2.merge({date: Date.tomorrow}))
+        Effex::Rate::Rate.new(@rate1),
+        Effex::Rate::Rate.new(@rate2.merge({date: Date.tomorrow}))
       ).valid?
   end
 
   def test_will_not_cross_with_different_base_currency
       refute Effex::Rate::Cross.new(
-        Effex::Rate::Reference.new(@rate1),
-        Effex::Rate::Reference.new(@rate2.merge({base_currency: "BGN"}))
+        Effex::Rate::Rate.new(@rate1),
+        Effex::Rate::Rate.new(@rate2.merge({base_currency: "BGN"}))
       ).valid?
   end
 
   def test_will_not_cross_with_same_counter_currency
       refute Effex::Rate::Cross.new(
-        Effex::Rate::Reference.new(@rate1),
-        Effex::Rate::Reference.new(@rate2.merge({counter_currency: "GBP"}))
+        Effex::Rate::Rate.new(@rate1),
+        Effex::Rate::Rate.new(@rate2.merge({counter_currency: "GBP"}))
       ).valid?
   end
 end

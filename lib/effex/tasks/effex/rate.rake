@@ -8,7 +8,7 @@ namespace :effex do
     ARGV.each { |a| task a.to_sym do ; end }
 
     repo = Effex::Repository::SQL.new(ENV.fetch("EFFEX_DB_URL"))
-    Effex::Repository.register(:reference_rate, repo)
+    Effex::Repository.register(:rate, repo)
 
     puts Effex::ExchangeRate.all_at(Date.parse(ARGV[1]), ARGV[2], ARGV[3])
   end

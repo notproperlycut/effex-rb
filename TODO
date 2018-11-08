@@ -5,9 +5,7 @@
   - notes about implementation
 
 - check require/module structure
-- unit test repositories for handling of dups
 - acceptance tests for repository implementations
   - include requirement to not create duplicate entries
 - integration tests for ecb source
-- sql security
 - check correct use of domain language

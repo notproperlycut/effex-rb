@@ -1,8 +1,8 @@
-require 'effex/rate/reference'
+require 'effex/rate/rate'
 
 module Effex
   module Rate
-    class Cross < Reference
+    class Cross < Rate
       attr_accessor :rate1, :rate2
 
       validate :sources_are_equal, :dates_are_equal, :base_currencies_are_equal
@@ -36,16 +36,15 @@ module Effex
       end
 
       def to_s
-        from_string1 = "#{@rate1.base_currency}/#{@rate1.counter_currency} (#{@rate1.rate})"
-        from_string2 = "#{@rate2.base_currency}/#{@rate2.counter_currency} (#{@rate2.rate})"
+        quote = "#{@base_currency}/#{@counter_currency} #{@rate}"
+        from_quote1 = "#{@rate1.base_currency}/#{@rate1.counter_currency} #{@rate1.rate}"
+        from_quote2 = "#{@rate2.base_currency}/#{@rate2.counter_currency} #{@rate2.rate}"
         <<~EOF
         Cross Rate
-          srce: #{@source}
-          date: #{@date}
-          base: #{@base_currency}
-          cntr: #{@counter_currency}
-          rate: #{@rate}
-          from: #{from_string1}, #{from_string2}
+          quote: #{quote}
+          date:  #{@date}
+          srce:  #{@source}
+          from:  #{from_quote1}, #{from_quote2}
         EOF
       end
 

@@ -5,8 +5,8 @@ require 'effex/repository'
 module Effex
   module ExchangeRate
     def self.load(source)
-      rates = source.retrieve.map { |r| Effex::Rate::Reference.new(r) }
-      Effex::Repository.for(:reference_rate).save_all(rates)
+      rates = source.retrieve.map { |r| Effex::Rate::Rate.new(r) }
+      Effex::Repository.for(:rate).save_all(rates)
     end
 
     def self.at(date, base_currency, counter_currency)
@@ -15,17 +15,17 @@ module Effex
     end
 
     def self.all_at(date, base_currency, counter_currency)
-      repo = Effex::Repository.for(:reference_rate)
+      repo = Effex::Repository.for(:rate)
 
-      reference_rates = repo.find(date, base_currency, counter_currency)
-      return reference_rates unless reference_rates.empty?
+      rates = repo.find(date, base_currency, counter_currency)
+      return rates unless rates.empty?
 
       all_cross_rates_at(date, base_currency, counter_currency)
     end
 
   private
     def self.all_cross_rates_at(date, base_currency, counter_currency)
-      repo = Effex::Repository.for(:reference_rate)
+      repo = Effex::Repository.for(:rate)
 
       rates1 = repo.find_by_counter(date, base_currency)
       rates2 = repo.find_by_counter(date, counter_currency)

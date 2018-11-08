@@ -5,7 +5,7 @@ require 'validates_timeliness'
 
 module Effex
   module Rate
-    class Reference
+    class Rate
       include ActiveModel::Validations
 
       attr_accessor :source, :date, :base_currency, :counter_currency, :rate
@@ -39,13 +39,12 @@ module Effex
       end
 
       def to_s
+        quote = "#{@base_currency}/#{@counter_currency} #{@rate}"
         <<~EOF
-        Reference Rate
-          srce: #{@source}
-          date: #{@date}
-          base: #{@base_currency}
-          cntr: #{@counter_currency}
-          rate: #{@rate}
+        Rate
+          quote: #{quote}
+          date:  #{@date}
+          srce:  #{@source}
         EOF
       end
 

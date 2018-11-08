@@ -5,7 +5,7 @@ namespace :effex do
     require "effex"
 
     repo = Effex::Repository::SQL.new(ENV.fetch("EFFEX_DB_URL"))
-    Effex::Repository.register(:reference_rate, repo)
+    Effex::Repository.register(:rate, repo)
 
     source = Effex::Source::EcbXml.new(ENV.fetch("EFFEX_ECB_URLS"))
     Effex::ExchangeRate.load(source)

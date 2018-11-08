@@ -1,10 +1,6 @@
 module Effex
   module Repository
     class Base
-      def new
-        Effex::Rate::Reference.new()
-      end
-
       # TODO: need acceptance tests for repository implementations
       # which should include a requirement to not duplicate already-saved
       # entries via this method (or save_all below)

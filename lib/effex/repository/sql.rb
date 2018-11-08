@@ -43,13 +43,13 @@ module Effex
 
       def find(date, base, counter)
         @db[:rates].where(date: date, base_currency: base, counter_currency: counter).map do |r|
-          Effex::Rate::Reference.new(r)
+          Effex::Rate::Rate.new(r)
         end
       end
 
       def find_by_counter(date, counter)
         @db[:rates].where(date: date, counter_currency: counter).map do |r|
-          Effex::Rate::Reference.new(r)
+          Effex::Rate::Rate.new(r)
         end
       end
 
