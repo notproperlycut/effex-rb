@@ -24,13 +24,27 @@ module Effex
       end
 
       def save(rate)
-        DB[:rates].insert({
+        DB[:rates].insert_ignore.insert({
           source: rate.source,
           date: rate.date,
           base_currency: rate.base_currency,
           counter_currency: rate.counter_currency,
           rate: rate.rate
         })
+      end
+
+      def save_all(rates)
+        rate_hashes = rates.map do |rate|
+          {
+            source: rate.source,
+            date: rate.date,
+            base_currency: rate.base_currency,
+            counter_currency: rate.counter_currency,
+            rate: rate.rate
+          }
+        end
+
+        DB[:rates].insert_ignore.multi_insert(rate_hashes)
       end
 
       def find(date, base, counter)
