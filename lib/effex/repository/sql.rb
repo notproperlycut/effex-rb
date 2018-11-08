@@ -1,5 +1,7 @@
 require 'sequel'
 
+require 'effex/log'
+
 module Effex
   module Repository
     # I thought this would use ActiveRecord - but given how simple this
@@ -12,6 +14,8 @@ module Effex
       end
 
       def save(rate)
+        Effex::Log.log.info "Saving a rate to #{@db.uri}"
+
         @db[:rates].insert_ignore.insert({
           source: rate.source,
           date: rate.date,
@@ -22,6 +26,8 @@ module Effex
       end
 
       def save_all(rates)
+        Effex::Log.log.info "Saving #{rates.length} rates to #{@db.uri}"
+
         rate_hashes = rates.map do |rate|
           {
             source: rate.source,

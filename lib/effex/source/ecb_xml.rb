@@ -1,6 +1,8 @@
 require 'open-uri'
 require 'nokogiri'
 
+require 'effex/log'
+
 module Effex
   module Source
     # Assumption here that all the ECB XML feeds, conform to the same schema
@@ -14,6 +16,8 @@ module Effex
       end
 
       def retrieve_one(url)
+        Effex::Log.log.info "Fetching rates from #{url}"
+
         doc = Nokogiri::XML(open(url)).remove_namespaces!
 
         rates = doc.xpath("/Envelope/Cube/Cube").flat_map do |date_collection|
