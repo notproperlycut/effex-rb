@@ -3,13 +3,18 @@ require 'nokogiri'
 
 module Effex
   module Source
+    # Assumption here that all the ECB XML feeds, conform to the same schema
     class EcbXml < Base
-      def ecb_url
-        raise NotImplementedError, 'ECB XML source must implement the ecb_url method'
+      def initialize(ecb_urls)
+        @ecb_urls = ecb_urls.split(',')
       end
 
       def retrieve
-        doc = Nokogiri::XML(open(ecb_url)).remove_namespaces!
+        @ecb_urls.flat_map { |url| retrieve_one(url) }
+      end
+
+      def retrieve_one(url)
+        doc = Nokogiri::XML(open(url)).remove_namespaces!
 
         rates = doc.xpath("/Envelope/Cube/Cube").flat_map do |date_collection|
           date_collection.xpath("Cube").map do |rate|
@@ -22,7 +27,7 @@ module Effex
           end
         end
 
-        decorate(rates)
+        decorate(rates, url)
       end
     end
   end

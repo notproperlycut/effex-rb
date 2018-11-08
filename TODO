@@ -4,12 +4,10 @@
   - module-, class-, method-level
   - readme, usage
   - notes about implementation
-- query
-  - add tasks (CLI?) for query
 
 - check require/module structure
 - unit test repositories for handling of dups
 - acceptance tests for repository implementations
   - include requirement to not create duplicate entries
 - integration tests for ecb source classes
-- fix configuration for DB and source
+- sql security

@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+export EFFEX_DB_URL='sqlite://rates.db'
+export EFFEX_ECB_URLS="http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml"
+
+rake effex:migrate
+rake effex:fetch
+rake effex:rate 2018-11-01 USD JPY
+rake effex:rate 2018-11-08 USD JPY

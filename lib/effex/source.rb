@@ -3,6 +3,5 @@ module Effex
     require 'effex/source/base'
     require 'effex/source/test'
     require 'effex/source/ecb_xml'
-    require 'effex/source/ecb_90_day'
   end
 end

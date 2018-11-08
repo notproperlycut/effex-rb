@@ -2,7 +2,7 @@ module Effex
   module Source
     class Test < Base
       def initialize(source_name, rates = [])
-        @source_name = source_name || "test_source"
+        @source = source || "test_source"
         @rates = rates
       end
 
@@ -15,7 +15,7 @@ module Effex
       end
 
       def retrieve
-        decorate(@rates)
+        decorate(@rates, @source)
       end
     end
   end

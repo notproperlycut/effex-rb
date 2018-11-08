@@ -2,12 +2,12 @@ require 'sequel'
 
 module Effex
   module Repository
-    # I thought this would use ActiveRecord, but that would likely be
-    # overkill given how simple the API below is
+    # I thought this would use ActiveRecord - but given how simple this
+    # API is, that might have been overkill. Chose sequel instead.
 
     class SQL < Base
 
-      def initialize(db_url = ENV.fetch("DATABASE_URL"))
+      def initialize(db_url)
         @db = Sequel.connect(db_url)
       end
 
