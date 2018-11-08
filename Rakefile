@@ -7,4 +7,6 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
+load "lib/effex/Rakefile"
+
 task :default => :test

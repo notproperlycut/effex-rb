@@ -1,0 +1,6 @@
+# http://mdzhang.com/blog/code/2016/09/10/create-ruby-gem-that-adds-rake-tasks/
+
+require 'effex'
+
+path = File.expand_path(__dir__)
+Dir.glob("#{path}/tasks/**/*.rake").each { |f| import f }
