@@ -2,7 +2,7 @@ module Effex
   module Repository
     require 'effex/repository/base'
     require 'effex/repository/memory'
-    require 'effex/repository/sequel'
+    require 'effex/repository/sql'
 
     def self.register(model, repository)
       repositories[model] = repository
