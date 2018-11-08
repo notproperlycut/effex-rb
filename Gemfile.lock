@@ -4,6 +4,8 @@ PATH
     effex (0.1.0)
       activemodel (~> 5.2)
       nokogiri (~> 1.8)
+      sequel (~> 5.14)
+      sqlite3 (~> 1.3)
       validates_timeliness (~> 4.0)
 
 GEM
@@ -24,6 +26,8 @@ GEM
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     rake (10.5.0)
+    sequel (5.14.0)
+    sqlite3 (1.3.13)
     thread_safe (0.3.6)
     timecop (0.9.1)
     timeliness (0.3.8)
