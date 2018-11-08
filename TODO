@@ -4,13 +4,6 @@
   - module-, class-, method-level
   - readme, usage
   - notes about implementation
-- data ingestion
-  - cron support
-  - rake task for retrieving/storing new data
-  - need Railtie?
-- storage abstraction
-  - need support for schema, migrations (rake)
-  - can likely support other (eg k-v) storage, support adapter
 - query
   - add tasks (CLI?) for query
 
@@ -19,3 +12,4 @@
 - acceptance tests for repository implementations
   - include requirement to not create duplicate entries
 - integration tests for ecb source classes
+- fix configuration for DB and source
