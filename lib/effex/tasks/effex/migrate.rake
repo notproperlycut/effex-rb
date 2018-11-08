@@ -7,7 +7,7 @@ namespace :effex do
     require "sequel/core"
     Sequel.extension :migration
 
-    Sequel.connect(ENV.fetch("DATABASE_URL")) do |db|
+    Sequel.connect(ENV.fetch("EFFEX_DB_URL")) do |db|
       path = File.expand_path(__dir__)
       Sequel::Migrator.run(db, "#{path}/../../repository/migrations")
     end
