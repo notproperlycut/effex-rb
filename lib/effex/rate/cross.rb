@@ -36,6 +36,8 @@ module Effex
       end
 
       def to_s
+        from_string1 = "#{@rate1.base_currency}/#{@rate1.counter_currency} (#{@rate1.rate})"
+        from_string2 = "#{@rate2.base_currency}/#{@rate2.counter_currency} (#{@rate2.rate})"
         <<~EOF
         Cross Rate
           srce: #{@source}
@@ -43,9 +45,7 @@ module Effex
           base: #{@base_currency}
           cntr: #{@counter_currency}
           rate: #{@rate}
-
-        [Rate 1]: #{@rate1}
-        [Rate 2]: #{@rate2}
+          from: #{from_string1}, #{from_string2}
         EOF
       end
 
