@@ -13,5 +13,3 @@ namespace :effex do
     puts Effex::ExchangeRate.all_at(Date.parse(ARGV[1]), ARGV[2], ARGV[3])
   end
 end
-
-
