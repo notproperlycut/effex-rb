@@ -41,4 +41,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri", "~> 1.8"
   spec.add_dependency "sequel", "~> 5.14"
   spec.add_dependency "sqlite3", "~> 1.3"
+  spec.add_dependency "pg", "~> 1.1"
 end
