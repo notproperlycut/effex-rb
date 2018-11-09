@@ -1,5 +1,7 @@
 # Effex
 
+My notes on the implementation (and remaining steps to "production ready") are in [NOTES.md](NOTES.md)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -16,9 +18,15 @@ Or install it yourself as:
 
     $ gem install effex
 
+## Run tests
+```
+bundle
+bundle exec rake test
+```
+
 ## Usage
 ### Via the APIs
-1. Register a repository under the `:rates` key. For example:
+1. Register a repository under the `:rate` key. For example:
 ```
 db_connection_string = "postgres://postgres:postgres@localhost:5432/postgres"
 repo = Effex::Repository::SQL.new(db_connection_string)
@@ -46,18 +54,18 @@ Include the Rakefile in your own if you wish, to gain three tasks:
 Example, `rake effex:rate 2018-10-10 USB GBP`
 
 To use the above you *must* set two environment variables:
-- `EFFEX_DB_URL` is a sequel-compatible database connection URL. See http://sequel.jeremyevans.net/rdoc/files/README_rdoc.html
-- `EFFEX_ECB_URLS` is a comma-separated list of URLs for ECB rates encoded in XML. See "Time Series" here https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+- `EFFEX_DB_URL` is a sequel-compatible database connection URL. See [here](http://sequel.jeremyevans.net/rdoc/files/README_rdoc.html)
+- `EFFEX_ECB_URLS` is a comma-separated list of URLs supplying ECB rates encoded in XML. See "Time Series" [here](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html)
 
 ### Via this repo
-A short script is provided at `./play` to illustrate use of the rake tasks. To use:
+A short script is provided at `./example` to illustrate use of the rake tasks. To use:
 ```
 bundle
-buncle exec bash play
+bundle exec bash example
 ```
 
 ### Use with postgres
-The `./play` script uses sqlite3 stored in a local `./rates.db` file. To test using postgres, the following should work
+The `./example` script uses sqlite3 stored in a local `./rates.db` file. To test using postgres, the following should work
 
 1. Start postgres locally. For example:
 ```
