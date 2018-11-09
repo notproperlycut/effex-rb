@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RepoActiveRecordTest < Minitest::Test
+class RepoSqlTest < Minitest::Test
   def test_passes
     assert true
   end

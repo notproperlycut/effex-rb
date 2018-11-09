@@ -1,9 +1,5 @@
 # Effex
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/effex`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,15 +17,66 @@ Or install it yourself as:
     $ gem install effex
 
 ## Usage
+### Via the APIs
+1. Register a repository under the `:rates` key. For example:
+```
+db_connection_string = "postgres://postgres:postgres@localhost:5432/postgres"
+repo = Effex::Repository::SQL.new(db_connection_string)
+Effex::Repository.register(:rate, repo)
+```
 
-TODO: Write usage instructions here
+2. Create and load a data source. For example:
+```
+source = Effex::Source::EcbXml.new("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml")
+Effex::ExchangeRate.load(source)
+```
 
-## Development
+3. Query for stored rates. For example:
+```
+Effex::ExchangeRate.all_at(Date.yesterday, "USD", "JPY") # rates from all sources
+Effex::ExchangeRate.at(Date.yesterday, "USD", "JPY")     # only one rate
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Via the rake tasks
+Include the Rakefile in your own if you wish, to gain three tasks:
+- `rake effex:migrate` to migrate your chosen data store (required)
+- `rake effex:fetch` to fetch and store from your chosen data sources. Fetch regularly on a suitable schedule.
+- `rake effex:rate YYYY-MM-DD BASE COUNTER` to query rates (or cross rates) from your store
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Example, `rake effex:rate 2018-10-10 USB GBP`
 
-## Contributing
+To use the above you *must* set two environment variables:
+- `EFFEX_DB_URL` is a sequel-compatible database connection URL. See http://sequel.jeremyevans.net/rdoc/files/README_rdoc.html
+- `EFFEX_ECB_URLS` is a comma-separated list of URLs for ECB rates encoded in XML. See "Time Series" here https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/effex.
+### Via this repo
+A short script is provided at `./play` to illustrate use of the rake tasks. To use:
+```
+bundle
+buncle exec bash play
+```
+
+### Use with postgres
+The `./play` script uses sqlite3 stored in a local `./rates.db` file. To test using postgres, the following should work
+
+1. Start postgres locally. For example:
+```
+docker run --name pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+```
+
+2. Use the correct sequel connection string:
+```
+export EFFEX_DB_URL="postgres://postgres:postgres@localhost:5432/postgres"
+export EFFEX_ECB_URLS="http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml"
+```
+
+3. Migrate
+```
+rake effex:migrate
+```
+
+4. Fetch and query
+```
+rake effex:fetch
+rake effex:rate 2018-11-08 USD JPY
+```

@@ -45,7 +45,7 @@ class EffexTest < Minitest::Test
     source2 = Effex::Source::Test.new("source2", @source2_rates)
 
     repo = Effex::Repository::Memory.new
-    Effex::Repository.register(:reference_rate, repo)
+    Effex::Repository.register(:rate, repo)
 
     Effex::ExchangeRate.load(source1)
     Effex::ExchangeRate.load(source2)
@@ -55,8 +55,8 @@ class EffexTest < Minitest::Test
     Timecop.return
   end
 
-  def test_finds_reference_rate
-    repo = Effex::Repository.for(:reference_rate)
+  def test_finds_rate
+    repo = Effex::Repository.for(:rate)
     rates = Effex::ExchangeRate.all_at(Date.today,'GBP','USD')
     assert rates.length == 1
     assert rates[0].date == @source1_rates[0][:date]
@@ -65,8 +65,8 @@ class EffexTest < Minitest::Test
     assert rates[0].rate == @source1_rates[0][:rate]
   end
 
-  def test_does_not_find_missing_reference_rate
-    repo = Effex::Repository.for(:reference_rate)
+  def test_does_not_find_missing_rate
+    repo = Effex::Repository.for(:rate)
 
     # These rates weren't provided
     refute Effex::ExchangeRate.at(Date.today,'GBP','BGN')
@@ -77,7 +77,7 @@ class EffexTest < Minitest::Test
   end
 
   def test_finds_cross_rate
-    repo = Effex::Repository.for(:reference_rate)
+    repo = Effex::Repository.for(:rate)
     rates = Effex::ExchangeRate.all_at(Date.today,'USD','JPY')
     assert rates.length == 1
     assert rates[0].date == @source1_rates[0][:date]
@@ -87,7 +87,7 @@ class EffexTest < Minitest::Test
   end
 
   def test_does_not_find_missing_cross_rate
-    repo = Effex::Repository.for(:reference_rate)
+    repo = Effex::Repository.for(:rate)
 
     # This would need rates from different sources
     refute Effex::ExchangeRate.at(Date.tomorrow,'USD','JPY')
@@ -113,13 +113,13 @@ class EffexTest < Minitest::Test
     source2 = Effex::Source::Test.new("source2", duplicate_rates)
 
     repo = Effex::Repository::Memory.new
-    Effex::Repository.register(:reference_rate, repo)
+    Effex::Repository.register(:rate, repo)
 
     Effex::ExchangeRate.load(source1)
     Effex::ExchangeRate.load(source2)
-    repo = Effex::Repository.for(:reference_rate)
+    repo = Effex::Repository.for(:rate)
 
-    # reference rates
+    # rates
     assert Effex::ExchangeRate.all_at(Date.today,'USD','JPY').length == 2
     assert Effex::ExchangeRate.all_at(Date.today,'USD','JPY').length == 2
   end

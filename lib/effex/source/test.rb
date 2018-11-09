@@ -1,7 +1,7 @@
 module Effex
   module Source
     class Test < Base
-      def initialize(source_name, rates = [])
+      def initialize(source, rates = [])
         @source = source || "test_source"
         @rates = rates
       end

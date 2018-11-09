@@ -1,17 +1,19 @@
 require 'active_model'
 require 'validates_timeliness'
 
-# TODO: rate should be stored as a string (the exact string supplied)
-
 module Effex
   module Rate
-    class Reference
+
+    # Represents an exchange rate (quote)
+    class Rate
       include ActiveModel::Validations
 
       attr_accessor :source, :date, :base_currency, :counter_currency, :rate
+
+      # Numeric representation of the exchange rate
       attr_reader :rate_f
 
-      # presumably some better constraint on source string format. But for now...
+      # Presumably some better constraint on source string format could be found. But for now...
       validates :source, presence: true, length: { minimum: 3 }
 
       validates :base_currency, presence: true, format: { with: /[A-Z][A-Z][A-Z]/, message: "Incorrect currency format" }
@@ -22,6 +24,16 @@ module Effex
 
       validate :currencies_cannot_be_equal
 
+      # Initialize a rate object
+      #
+      # Required attribs:
+      #  source [String]: string uniquely representing the data source
+      #  date [Date]: date of the exchange rate
+      #  base_currency [String]: ISO 4217 code of the base
+      #  counter_currency [String]: ISO 4217 code of the counter
+      #  rate [String]: string representation of the numeric exchange rate
+      #
+      # @param attribs [Hash] Values encoding the rate (see above)
       def initialize(attribs)
         attribs.each do |k,v|
           instance_variable_set("@#{k}", v) unless v.nil?
@@ -39,13 +51,12 @@ module Effex
       end
 
       def to_s
+        quote = "#{@base_currency}/#{@counter_currency} #{@rate}"
         <<~EOF
-        Reference Rate
-          srce: #{@source}
-          date: #{@date}
-          base: #{@base_currency}
-          cntr: #{@counter_currency}
-          rate: #{@rate}
+        Rate
+          quote: #{quote}
+          date:  #{@date}
+          srce:  #{@source}
         EOF
       end
 

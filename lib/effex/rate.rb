@@ -1,6 +1,6 @@
 module Effex
   module Rate
-    require 'effex/rate/reference'
+    require 'effex/rate/rate'
     require 'effex/rate/cross'
   end
 end
